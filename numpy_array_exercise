@@ -1,0 +1,88 @@
+import numpy as np
+
+
+def find_power_with_six():
+    """
+    找出所有满足条件的i值(1<=i<100)，使得2^i的最后一位数字是6
+
+    返回:
+    numpy.ndarray: 包含所有满足条件的i值的数组
+    """
+    return np.array([i for i in range(1, 100) if (2 ** i) % 10 == 6])
+
+
+def first_ten_powers():
+    """
+    计算2的前10次幂
+
+    返回:
+    numpy.ndarray: 包含2的0次幂到9次幂的数组
+    """
+    return np.array([2 ** i for i in range(10)])
+
+
+def create_frame_matrix():
+    """
+    创建一个10×10的框架矩阵:
+    - 最外层和次外层(共2层)的元素都为1
+    - 内部(2:-2,2:-2)全部为0
+
+    返回:
+    numpy.ndarray: 10×10的框架矩阵
+    """
+    matrix = np.zeros((10, 10), dtype=int)
+    # 上边框2行
+    matrix[:2, :] = 1
+    # 下边框2行
+    matrix[-2:, :] = 1
+    # 左边框2列
+    matrix[:, :2] = 1
+    # 右边框2列
+    matrix[:, -2:] = 1
+    return matrix
+
+
+def create_number_matrix():
+    """
+    创建一个10×10的数字矩阵:
+    - 边框为-1: 顶部第0行、底部第9行、左侧第0列、右侧后4列(6,7,8,9)全部-1
+    - 内部剩余区域 (1:-1, 1:6) 大小是8×5，用0~39填充
+
+    返回:
+    numpy.ndarray: 10×10的数字矩阵
+    """
+    matrix = np.full((10, 10), -1, dtype=int)
+    # 将内部 (1:-1, 1:6) 放置 0~39
+    matrix[1:-1, 1:6] = np.arange(40).reshape(8, 5)
+    return matrix
+
+
+def create_multiplication_matrix():
+    """
+    创建一个3×5的矩阵，其中A[i,j] = i × j
+    要求使用数组广播实现
+
+    返回:
+    numpy.ndarray: 3×5的矩阵
+    """
+    i = np.arange(3).reshape(-1, 1)  # shape (3,1)
+    j = np.arange(5).reshape(1, -1)  # shape (1,5)
+    return i * j
+
+
+def create_special_matrix():
+    """
+    创建一个特殊的11×11矩阵:
+    - 所有元素初始为1
+    - 主对角线元素为 [5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5]
+    - 可通过广播或索引设置对角线
+
+    返回:
+    numpy.ndarray: 11×11的矩阵
+    """
+    mat = np.ones((11, 11), dtype=int)
+    # 生成对角线的值 [5,4,3,2,1,0,1,2,3,4,5]
+    diag_vals = np.abs(np.arange(11) - 5)
+    # 放到主对角线上
+    mat[np.arange(11), np.arange(11)] = diag_vals
+    return mat
